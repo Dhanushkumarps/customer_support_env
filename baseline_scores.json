@@ -1,0 +1,35 @@
+{
+  "easy": {
+    "average_score": 0.6,
+    "scores": [
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "episodes": 5
+  },
+  "medium": {
+    "average_score": 0.28,
+    "scores": [
+      0.6,
+      0.0,
+      0.2,
+      0.0,
+      0.6
+    ],
+    "episodes": 5
+  },
+  "hard": {
+    "average_score": 0.3,
+    "scores": [
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3
+    ],
+    "episodes": 5
+  }
+}
