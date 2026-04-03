@@ -124,9 +124,9 @@ async def reset(request: Request) -> Dict[str, Any]:
     env = get_or_create_session(session_id)
 
     observation = env.reset(
-        seed=request.seed,
+        seed=seed,
         episode_id=session_id,
-        task_name=request.task_name,
+        task_name=task_name,
     )
 
     return {
