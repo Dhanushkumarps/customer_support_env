@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "customer-support-env"
+version = "0.2.0"
+description = "OpenEnv customer support simulation"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "openenv",
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic>=2.0",
+    "groq>=0.4",
+    "openai>=1.0",
+    "python-dotenv",
+    "httpx"
+]
