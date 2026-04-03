@@ -394,3 +394,10 @@ async def run_baseline() -> Dict[str, Any]:
         "hard": results["hard"]["average_score"],
         "details": results,
     }
+
+def main():
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860)
+
+if __name__ == "__main__":
+    main()
