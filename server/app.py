@@ -103,7 +103,7 @@ async def health_check() -> Dict[str, str]:
 
 
 @app.post("/reset")
-async def reset(request: ResetRequest) -> Dict[str, Any]:
+async def reset(request: Optional[ResetRequest] = None) -> Dict[str, Any]:
     """Start a new episode.
 
     Creates or reuses a session, resets the environment with the requested
@@ -115,6 +115,9 @@ async def reset(request: ResetRequest) -> Dict[str, Any]:
     Returns:
         The opening observation dict plus the session_id.
     """
+    if request is None:
+        request = ResetRequest()
+        
     session_id = request.session_id or str(uuid.uuid4())
     env = get_or_create_session(session_id)
 
