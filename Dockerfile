@@ -9,7 +9,7 @@
 #   docker build && docker push to your HF Space repo
 # =============================================================================
 
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 # ---------- Labels ---------- #
 LABEL maintainer="your-hf-username"

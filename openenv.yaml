@@ -2,11 +2,12 @@
 # Describes the environment, its models, available tasks, and deployment metadata.
 
 name: customer_support_env
-version: "0.1.0"
+version: "0.2.0"
 description: >
   A realistic customer support simulation environment where an AI agent must
-  classify tickets, craft responses, and manage multi-turn conversations to
-  resolve customer issues.
+  classify tickets, craft empathetic responses, and manage multi-turn
+  conversations to resolve customer issues across 5 real-world categories
+  and 15 distinct scenarios.
 
 # Pydantic model names (defined in models.py)
 action: SupportAction
@@ -19,16 +20,15 @@ tasks:
     description: >
       Ticket Classification: given a single customer message, the agent must
       output the correct issue category (refund, technical, shipping, billing,
-      or account). Scored as 0.0 or 1.0.
+      or account). Scored 0.0, 0.5, or 1.0.
     difficulty: easy
     max_steps: 1
 
   - name: medium
     description: >
-      Single-Turn Response: the agent must write a helpful, relevant reply
+      Single-Turn Response: the agent must write an empathetic, complete reply
       that resolves the customer's issue in one message. Scored 0.0–1.0 based
-      on keyword coverage, response detail, and avoidance of unnecessary
-      escalation.
+      on keyword coverage, empathy, response length, and escalation avoidance.
     difficulty: medium
     max_steps: 1
 
@@ -36,15 +36,37 @@ tasks:
     description: >
       Multi-Turn Conversation: the agent handles a full 3-turn support
       dialogue — ask a clarifying question, provide a resolution, and close
-      the ticket politely. Scored 0.0–1.0 across all turns.
+      the ticket politely. Cumulative score across turns, 0.0–1.0.
     difficulty: hard
     max_steps: 10
+
+# API endpoints
+endpoints:
+  health: GET /
+  reset: POST /reset
+  step: POST /step
+  state: GET /state
+  tasks: GET /tasks
+  grader: POST /grader
+  baseline: POST /baseline
+
+# Baseline model
+baseline_model: llama-3.1-8b-instant
+baseline_api: groq
+
+# Placeholder baseline scores (run `python run_baseline.py` to update)
+baseline_scores:
+  easy: 0.90
+  medium: 0.55
+  hard: 0.40
 
 tags:
   - customer-support
   - nlp
   - multi-turn
   - classification
+  - reward-shaping
+  - openenv
 
-author: "your-hf-username"
-hf_space: "your-hf-username/customer_support_env"
+author: "sanathkumarps"
+hf_space: "sanathkumarps/customer_support_env"

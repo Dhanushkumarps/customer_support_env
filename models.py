@@ -2,12 +2,13 @@
 models.py - Pydantic data models for the OpenEnv Customer Support environment.
 
 Defines the action, observation, and state schemas used by the environment server,
-client, and baseline agent.
+client, and baseline agent. Fully compliant with the OpenEnv spec.
 """
 
 from typing import List, Optional
 
 from pydantic import BaseModel
+
 try:
     from openenv.core.env_server import Action, Observation, State
 except ImportError:
@@ -59,7 +60,13 @@ class SupportObservation(Observation):
     """Whether the episode has ended (resolved, escalated, or max steps reached)."""
 
     reward: Optional[float] = None
-    """Grader-assigned reward for the agent's performance (0.0–1.0). None until episode ends."""
+    """Grader-assigned reward for the most recent step (0.0–1.0). None on the first obs."""
+
+    cumulative_reward: float = 0.0
+    """Running total reward accumulated across all turns in this episode."""
+
+    turn_scores: List[float] = []
+    """Per-turn reward breakdown (useful for hard multi-turn task analysis)."""
 
 
 class SupportState(State):
@@ -70,7 +77,7 @@ class SupportState(State):
     """
 
     issue_type: str = ""
-    """Category of the customer issue, e.g. "refund", "technical", "shipping", "billing", "account"."""
+    """Category of the customer issue: "refund", "technical", "shipping", "billing", "account"."""
 
     step_count: int = 0
     """Number of agent actions taken so far in this episode."""
@@ -92,3 +99,12 @@ class SupportState(State):
 
     max_steps: int = 10
     """Maximum number of agent steps allowed before the episode is forcibly ended."""
+
+    cumulative_reward: float = 0.0
+    """Running total of rewards accumulated across all turns."""
+
+    turn_scores: List[float] = []
+    """Per-turn reward values for detailed grader breakdown."""
+
+    scenario_index: int = 0
+    """Index of the chosen scenario within its category (for reproducibility)."""

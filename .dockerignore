@@ -1,0 +1,15 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+*.log
+.git/
+.gitignore
+.gitattributes
+*.md
+!README.md
+baseline_scores.json
+output*.log
