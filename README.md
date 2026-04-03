@@ -1,3 +1,11 @@
+---
+title: Customer Support OpenEnv
+emoji: ??
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
 # 🎧 Customer Support OpenEnv
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
@@ -294,3 +302,4 @@ MIT — see [LICENSE](LICENSE).
 <p align="center">
   Built for the <strong>OpenEnv Hackathon</strong> 🚀 &nbsp;|&nbsp; Customer support AI benchmark that fills a real gap.
 </p>
+
