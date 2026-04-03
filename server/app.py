@@ -14,7 +14,7 @@ Endpoints:
 import uuid
 from typing import Any, Dict, Optional
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -103,7 +103,7 @@ async def health_check() -> Dict[str, str]:
 
 
 @app.post("/reset")
-async def reset(request: Optional[ResetRequest] = None) -> Dict[str, Any]:
+async def reset(request: Optional[ResetRequest] = Body(None)) -> Dict[str, Any]:
     """Start a new episode.
 
     Creates or reuses a session, resets the environment with the requested
