@@ -14,7 +14,7 @@ Endpoints:
 import uuid
 from typing import Any, Dict, Optional
 
-from fastapi import FastAPI, HTTPException, Query, Body
+from fastapi import FastAPI, HTTPException, Query, Body, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -103,22 +103,24 @@ async def health_check() -> Dict[str, str]:
 
 
 @app.post("/reset")
-async def reset(request: Optional[ResetRequest] = Body(None)) -> Dict[str, Any]:
+async def reset(request: Request) -> Dict[str, Any]:
     """Start a new episode.
 
     Creates or reuses a session, resets the environment with the requested
     task tier, and returns the opening observation.
-
-    Args:
-        request: ResetRequest with optional session_id, task_name, and seed.
-
-    Returns:
-        The opening observation dict plus the session_id.
     """
-    if request is None:
-        request = ResetRequest()
+    try:
+        body = await request.json()
+    except Exception:
+        body = None
+
+    if not body or not isinstance(body, dict):
+        body = {}
         
-    session_id = request.session_id or str(uuid.uuid4())
+    session_id = body.get("session_id") or str(uuid.uuid4())
+    task_name = body.get("task_name", "easy")
+    seed = body.get("seed")
+    
     env = get_or_create_session(session_id)
 
     observation = env.reset(
